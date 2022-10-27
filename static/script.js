@@ -1,15 +1,16 @@
 document.addEventListener("DOMContentLoaded", init)
-
-const elems = {}
+const eles = {}
 
 function init() {
-	elems.gameBoard = document.querySelector(".game-board")
-	// elems.gameContainer = document.createElement("div")
-	// elems.wordsList = document.createElement("div")
-	elems.btn = document.createElement("button")
-
-	elems.gameBoard.appendChild(elems.btn)
-
-	elems.gameBoard.textContent = "Game start"
-	console.log(elems)
+	eles.gameArea = document.querySelector(".game-board")
+	eles.gridContainer = document.createElement("div")
+	eles.message = document.createElement("div")
+	eles.gridContainer.classList.add("gridContainer")
+	eles.myList = document.createElement("div")
+	eles.btn = document.createElement("button")
+	//eles.gameArea.textContent = "Game Ready";
+	eles.gameArea.append(eles.gridContainer)
+	eles.gameArea.append(eles.myList)
+	eles.gameArea.append(eles.message)
+	eles.gameArea.append(eles.btn)
 }
