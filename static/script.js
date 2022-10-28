@@ -3,24 +3,33 @@ const eles = {}
 
 const myWords = [
 	"komunikatywność",
-	"pracawgrupie",
+	"praca w grupie",
 	"empatia",
 	"projektowanie",
 	"zarządzanie",
 ]
 
-const game = { r: 9, c: 15, rxc: 135, x: "", y: "", arr: [] }
+const game = { r: 9, c: 15, rxc: 135, x: "", y: "", arr: [], placedWords: [] }
+
+const placedWords = []
 
 function init() {
 	eles.gameArea = document.querySelector(".game-board")
+
+	//create eles
 	eles.gridContainer = document.createElement("div")
 	eles.message = document.createElement("div")
-	eles.gridContainer.classList.add("gridContainer")
 	eles.myList = document.createElement("div")
 	eles.btn = document.createElement("button")
 	//eles.gameArea.textContent = "Game Ready";
-	eles.gameArea.append(eles.gridContainer)
+
+	//add props
+	eles.gridContainer.classList.add("gridContainer")
+	eles.myList.classList.add("myList")
+
+	//appends
 	eles.gameArea.append(eles.myList)
+	eles.gameArea.append(eles.gridContainer)
 	eles.gameArea.append(eles.message)
 	eles.gameArea.append(eles.btn)
 	eles.btn.textContent = "Start the game."
@@ -28,7 +37,15 @@ function init() {
 }
 
 const startGame = () => {
-	console.log("game started")
+	game.r = 9
+	game.c = 15
+	game.rxc = 135
+	game.x = ""
+	game.y = ""
+	game.arr.length = 0
+	game.arr.length = game.r * game.c
+	game.placedWords.length = 0
+	//console.log("game started")
 	game.arr.length = game.r * game.c
 	for (let index = 0; index < game.arr.length; index++) {
 		game.arr[index] = "-"
@@ -42,24 +59,57 @@ const startGame = () => {
 		game.y += " auto "
 	}
 
-	console.log(game)
+	//console.log(game)
 	eles.gridContainer.style.gridTemplateColumns = game.x
 	eles.gridContainer.style.gridTemplateRows = game.y
 
 	myWords.forEach((val, index) => {
 		let temp = placeWord(val)
-		console.log(temp)
+		if (temp) {
+			game.placedWords.push({
+				word: val,
+				pos: temp,
+			})
+		}
 	})
 
+	addLetters()
 	buildBoard()
+
+	eles.myList.innerHTML = ""
+	game.placedWords.forEach((wv) => {
+		wv.ele = document.createElement("div")
+		wv.ele.textContent = wv.word
+		wv.ele.arr = wv.pos
+		eles.myList.append(wv.ele)
+	})
+	console.log(game)
+}
+
+const addLetters = () => {
+	for (let i = 0; i < game.arr.length; i++) {
+		if (game.arr[i] == "-") {
+			game.arr[i] = randomLetter()
+		}
+	}
+}
+
+const randomLetter = () => {
+	return "AĄBĆDEĘFGHIJKLŁMNOÓPRSŚTUWYZŻŹ".toUpperCase().split("")[
+		Math.floor(Math.random() * 30)
+	]
 }
 
 const placeWord = (word) => {
-	console.log(word)
+	//console.log(word)
 	let placedOk = false
 	let cnt = 300
-	word = word.split("")
-	console.log(word)
+	word = word
+		.toUpperCase()
+		.split("")
+		.filter((e) => e.trim().length)
+		.join("")
+	//console.log(word)
 	while (!placedOk && cnt > 0) {
 		cnt--
 		let pos = { col: 0, row: 0 }
@@ -76,10 +126,12 @@ const placeWord = (word) => {
 			placedOk = yPlace(pos, word)
 		}
 	}
+	return placedOk
 }
 const yPlace = (cor, word) => {
 	let start = cor.row * game.c + cor.col
 	let isOkCounter = 0
+	let indexPlaced = []
 	for (let i = 0; i < word.length; i++) {
 		if (game.arr[start + i * game.c] == "-") {
 			isOkCounter++
@@ -89,9 +141,10 @@ const yPlace = (cor, word) => {
 		for (let i = 0; i < word.length; i++) {
 			if (game.arr[start + i * game.c] == "-") {
 				game.arr[start + i * game.c] = word[i]
+				indexPlaced.push(start + i * game.c)
 			}
 		}
-		return true
+		return indexPlaced
 	}
 	return false
 }
@@ -99,6 +152,7 @@ const yPlace = (cor, word) => {
 const xPlace = (cor, word) => {
 	let start = cor.row * game.c + cor.col
 	let isOkCounter = 0
+	let indexPlaced = []
 	for (let i = 0; i < word.length; i++) {
 		if (game.arr[start + i] == "-") {
 			isOkCounter++
@@ -108,9 +162,10 @@ const xPlace = (cor, word) => {
 		for (let i = 0; i < word.length; i++) {
 			if (game.arr[start + i] == "-") {
 				game.arr[start + i] = word[i]
+				indexPlaced.push(start + i)
 			}
 		}
-		return true
+		return indexPlaced
 	}
 	return false
 }
@@ -126,5 +181,20 @@ const buildBoard = () => {
 		div.textContent = e
 		div.classList.add("grid-item")
 		eles.gridContainer.append(div)
+		div.addEventListener("click", (e) => {
+			console.log(i)
+			console.log(game.arr[i])
+			let checker = { found: 0, word: "" }
+			game.placedWords.forEach((w) => {
+				if (w.pos.includes(i)) {
+					checker.found++
+					checker.word = w.word
+				}
+			})
+			if (checker.found > 0) {
+				div.style.backgroundColor = "white"
+				div.style.color = "#372387"
+			}
+		})
 	})
 }

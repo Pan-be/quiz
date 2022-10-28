@@ -1,8 +1,27 @@
+body {
+	background-color: #372387;
+	color: white;
+}
+
 .grid-item {
-	border: 1px solid black;
+	border: 1px solid #00dded;
 	padding: 20px;
 	font-size: 2em;
 	text-align: center;
+}
+
+button {
+	padding: 30px;
+	text-align: center;
+	color: #372387;
+	background-color: white;
+	font-size: 2em;
+	cursor: pointer;
+}
+
+.myList {
+	text-align: center;
+	font-size: 2em;
 }
 
 .gridContainer {
