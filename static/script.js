@@ -1,15 +1,26 @@
 document.addEventListener("DOMContentLoaded", init)
 const eles = {}
 
-const myWords = [
-	"komunikatywność",
-	"praca w grupie",
-	"empatia",
-	"projektowanie",
-	"zarządzanie",
-]
+const myWords = ["kkkkk"]
 
-const game = { r: 9, c: 15, rxc: 135, x: "", y: "", arr: [], placedWords: [] }
+// const myWords = [
+// 	"komunikatywność",
+// 	"praca w grupie",
+// 	"empatia",
+// 	"projektowanie",
+// 	"zarządzanie",
+// ]
+
+const game = {
+	r: 9,
+	c: 15,
+	rxc: 135,
+	x: "",
+	y: "",
+	arr: [],
+	placedWords: [],
+	boardArr: [],
+}
 
 const placedWords = []
 
@@ -42,6 +53,7 @@ const startGame = () => {
 	game.rxc = 135
 	game.x = ""
 	game.y = ""
+	game.boardArr.length = 0
 	game.arr.length = 0
 	game.arr.length = game.r * game.c
 	game.placedWords.length = 0
@@ -181,9 +193,13 @@ const buildBoard = () => {
 		div.textContent = e
 		div.classList.add("grid-item")
 		eles.gridContainer.append(div)
+
 		div.addEventListener("click", (e) => {
 			console.log(i)
 			console.log(game.arr[i])
+
+			game.boardArr[i] = true
+
 			let checker = { found: 0, word: "" }
 			game.placedWords.forEach((w) => {
 				if (w.pos.includes(i)) {
@@ -194,7 +210,47 @@ const buildBoard = () => {
 			if (checker.found > 0) {
 				div.style.backgroundColor = "white"
 				div.style.color = "#372387"
+			} else {
+				div.style.backgroundColor = "red"
+				div.style.color = "#372387"
 			}
+			foundChecker()
 		})
 	})
+}
+const foundChecker = () => {
+	game.placedWords.forEach((w, ind) => {
+		// console.log(w.pos)
+		let checker = 0
+		game.boardArr.forEach((value, index) => {
+			// console.log(value)
+			if (w.pos.includes(index)) {
+				checker++
+			}
+		})
+		if (checker == w.word.length) {
+			w.ele.style.color = "RGB(236, 240, 0)"
+			w.ele.style.textDecoration = "line-through"
+		}
+	})
+	checkWinner()
+}
+
+const log = (message) => {
+	eles.message.innerHTML = message
+}
+
+const checkWinner = () => {
+	let counter = 0
+	game.placedWords.forEach((w, ind) => {
+		if (w.ele.style.textDecoration == "line-through") {
+			// console.log("its ALIVE")
+			counter++
+		}
+	})
+	console.log(`${game.placedWords.length - counter} words left.`)
+	if (game.placedWords.length - counter == 0 || game.placedWords.length == 0) {
+		// console.log("yupiii")
+		log("Wygrana!<br><br>Naciśnij przycisk by zagrać ponownie.")
+	}
 }

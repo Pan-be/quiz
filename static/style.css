@@ -3,6 +3,11 @@ body {
 	color: white;
 }
 
+.game-board {
+	text-align: center;
+	margin: auto;
+}
+
 .grid-item {
 	border: 1px solid #00dded;
 	padding: 20px;
