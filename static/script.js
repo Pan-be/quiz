@@ -1,20 +1,20 @@
 document.addEventListener("DOMContentLoaded", init)
 const eles = {}
 
-const myWords = ["kkkkk"]
+// const myWords = ["kkkkk"]
 
-// const myWords = [
-// 	"komunikatywność",
-// 	"praca w grupie",
-// 	"empatia",
-// 	"projektowanie",
-// 	"zarządzanie",
-// ]
+const myWords = [
+	"komunikatywność",
+	"pracawgrupie",
+	"empatia",
+	"projektowanie",
+	"zarządzanie",
+]
 
 const game = {
 	r: 9,
 	c: 15,
-	rxc: 135,
+	w: 30,
 	x: "",
 	y: "",
 	arr: [],
@@ -35,7 +35,10 @@ function init() {
 	//eles.gameArea.textContent = "Game Ready";
 
 	//add props
+	eles.gridContainer.style.width = `${game.c * game.w + 50}px`
+	eles.gridContainer.style.margin = "auto"
 	eles.gridContainer.classList.add("gridContainer")
+	eles.message.classList.add("message")
 	eles.myList.classList.add("myList")
 
 	//appends
@@ -91,7 +94,7 @@ const startGame = () => {
 	eles.myList.innerHTML = ""
 	game.placedWords.forEach((wv) => {
 		wv.ele = document.createElement("div")
-		wv.ele.textContent = wv.word
+		wv.ele.textContent = `${wv.word}, `
 		wv.ele.arr = wv.pos
 		eles.myList.append(wv.ele)
 	})
@@ -116,16 +119,26 @@ const placeWord = (word) => {
 	//console.log(word)
 	let placedOk = false
 	let cnt = 300
-	word = word
-		.toUpperCase()
-		.split("")
-		.filter((e) => e.trim().length)
-		.join("")
+
+	word =
+		Math.random() > 0.5
+			? word
+					.toUpperCase()
+					.split("")
+					.filter((e) => e.trim().length)
+					.join("")
+			: word
+					.toUpperCase()
+					.split("")
+					.filter((e) => e.trim().length)
+					.reverse()
+					.join("")
+
 	//console.log(word)
 	while (!placedOk && cnt > 0) {
 		cnt--
 		let pos = { col: 0, row: 0 }
-		let dir = (Math.random() > 0, 5) ? true : false
+		let dir = Math.random() > 0.5 ? true : false
 		if (dir && word.length <= game.c) {
 			pos.col = findStartPos(word.length, game.c)
 			pos.row = Math.floor(Math.random() * game.r)
@@ -211,7 +224,7 @@ const buildBoard = () => {
 				div.style.backgroundColor = "white"
 				div.style.color = "#372387"
 			} else {
-				div.style.backgroundColor = "red"
+				div.style.backgroundColor = "white"
 				div.style.color = "#372387"
 			}
 			foundChecker()
@@ -248,7 +261,11 @@ const checkWinner = () => {
 			counter++
 		}
 	})
-	console.log(`${game.placedWords.length - counter} words left.`)
+	log(
+		`Pozostało do znalezienia: <span>${
+			game.placedWords.length - counter
+		} słów</span>`
+	)
 	if (game.placedWords.length - counter == 0 || game.placedWords.length == 0) {
 		// console.log("yupiii")
 		log("Wygrana!<br><br>Naciśnij przycisk by zagrać ponownie.")

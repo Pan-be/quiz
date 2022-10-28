@@ -1,34 +1,97 @@
+@import url("https://fonts.googleapis.com/css?family=Lato");
+
+html,
 body {
-	background-color: #372387;
+	height: 100%;
+	margin: 0;
+}
+
+.wrapper {
+	min-height: 100%;
+	position: relative;
+	margin: 0;
+	background-image: url(pics/background.png);
+	background-size: cover;
+	background-position-x: center;
 	color: white;
+	font-family: "Lato", sans-serif;
+}
+
+#entVid {
+	width: 100%;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 2147483647;
 }
 
 .game-board {
 	text-align: center;
 	margin: auto;
+	padding-bottom: 239.7px;
 }
 
 .grid-item {
 	border: 1px solid #00dded;
-	padding: 20px;
-	font-size: 2em;
+	padding: 3px;
+	margin: 0;
+	font-size: 1.5em;
 	text-align: center;
+	cursor: grab;
+}
+
+.grid-item:hover {
+	background-color: white;
+	color: #372387;
+}
+
+.message {
+	margin-top: 40px;
+}
+
+.message span {
+	color: RGB(236, 240, 0);
 }
 
 button {
-	padding: 30px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	padding: 15px;
+	width: 20%;
 	text-align: center;
+	font-weight: bold;
 	color: #372387;
 	background-color: white;
-	font-size: 2em;
+	font-size: 1em;
 	cursor: pointer;
 }
 
 .myList {
+	display: inline-block;
 	text-align: center;
-	font-size: 2em;
+	margin: 40px auto 40px;
+}
+
+.myList > div {
+	display: inline-block;
+	padding-right: 5px;
+	font-size: 1em;
 }
 
 .gridContainer {
 	display: grid;
+}
+
+.footer {
+	margin: 0;
+}
+
+footer img {
+	height: 239.7px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
 }
