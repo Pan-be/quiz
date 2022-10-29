@@ -5,19 +5,21 @@ const a = document.createElement("a")
 
 ps = [
 	"Świat Cię potrzebuje! Na mapie małopolski przebywają potrzebujące dzieci i młodzież, które uciekły z wojny. Nie mieli czasu na pakowanie, nie znają języka, są przestraszeni i nie wiedzą co robić.",
+	"<br>",
 	"<span>Zagraj w grę</span> i aktywj pomoc superbohakera! Rozwiąż łamigłówki, poznaj możliwości wolontariatu <span>i dołącz do nas</span>",
 ]
 
 ps.forEach((element) => {
 	paragraph = document.createElement("p")
 	paragraph.innerHTML = element
+	paragraph.classList.add("message", "text")
 	content.append(paragraph)
 })
 
 btn.textContent = "chcę zagrać"
 a.textContent = "chcę pomagać"
 a.setAttribute("href", "https://zrzutka.pl/xg44xc")
-a.classList.add = "extBtn"
+a.classList.add("extBtn")
 
 content.append(btn)
 content.append(a)
