@@ -296,9 +296,11 @@ const buildBoard = () => {
 		div.classList.add("grid-item")
 		eles.gridContainer.append(div)
 
+		// const mouseClicked = false
+
 		div.addEventListener("click", (e) => {
-			console.log(i)
-			console.log(game.arr[i])
+			// console.log(i)
+			// console.log(game.arr[i])
 
 			game.boardArr[i] = true
 
