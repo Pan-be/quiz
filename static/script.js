@@ -1,6 +1,12 @@
 document.addEventListener("DOMContentLoaded", init)
 const eles = {}
 
+//quiz answers
+
+const answers = ["Ok. 12 tys.", "Ok. 127 tys.", "Ok. 5 tys.", "Ok. 380 tys."]
+
+//searchWords arrays
+
 // const myWords = ["kkkkk"]
 
 const myWords = [
@@ -28,6 +34,7 @@ function init() {
 	eles.gameArea = document.querySelector(".game-board")
 
 	//create eles
+	eles.paragraph = document.createElement("p")
 	eles.gridContainer = document.createElement("div")
 	eles.message = document.createElement("div")
 	eles.myList = document.createElement("div")
@@ -38,19 +45,99 @@ function init() {
 	eles.gridContainer.style.width = `${game.c * game.w + 50}px`
 	eles.gridContainer.style.margin = "auto"
 	eles.gridContainer.classList.add("gridContainer")
+	eles.paragraph.classList.add("message", "text")
 	eles.message.classList.add("message")
 	eles.myList.classList.add("myList")
 
 	//appends
+	eles.gameArea.append(eles.paragraph)
 	eles.gameArea.append(eles.myList)
 	eles.gameArea.append(eles.gridContainer)
 	eles.gameArea.append(eles.message)
 	eles.gameArea.append(eles.btn)
-	eles.btn.textContent = "Start the game."
+	eles.btn.textContent = "Zagraj"
+	eles.btn.addEventListener("click", startQuiz)
+}
+
+//quiz
+const startQuiz = () => {
+	fetch("./includes/texts.json")
+		.then((results) => results.json())
+		.then((data) => texts(data))
+		.catch((error) => console.log(error))
+
+	function texts(data) {
+		eles.paragraph.innerHTML = `${data.quiz.firstPar} <br><br> ${data.quiz.secondPar}`
+	}
+
+	eles.gridContainer.style.gridTemplateColumns = "auto auto"
+	eles.gridContainer.style.gridTemplateRows = "auto auto"
+
+	buildAnswers()
+
+	eles.btn.style.display = "none"
+
+	// checkAnswers()
+}
+
+let id = 0
+
+const buildAnswers = () => {
+	answers.forEach((e) => {
+		id++
+		let div = document.createElement("div")
+		div.classList.add("grid-item", "answer")
+		div.setAttribute("id", id)
+		div.textContent = e
+		eles.gridContainer.append(div)
+
+		// let geoFig1 = document.createElement("div")
+		// let geoFig2 = document.createElement("div")
+
+		// geoFig1.classList.add("triangle")
+		// geoFig2.classList.add("trapezoid")
+
+		// divWrap.append(geoFig1)
+		// divWrap.append(geoFig2)
+
+		div.addEventListener("click", (e) => {
+			// console.log("whazza")
+			checkAns(e.target.id)
+		})
+		return div
+	})
+}
+
+const checkAns = (e) => {
+	if (e == 2) {
+		winnerFound()
+	} else {
+		log("To nie jest dobra odpowiedź<br>")
+	}
+}
+
+const winnerFound = () => {
+	log("Poprawna odpowiedź! Możesz przejść dalej")
+	return quizEnd()
+}
+
+const quizEnd = () => {
+	eles.btn.style.display = "inline"
+	eles.btn.textContent = "Dalej"
 	eles.btn.addEventListener("click", startGame)
 }
 
+//searchWord
 const startGame = () => {
+	fetch("./includes/texts.json")
+		.then((results) => results.json())
+		.then((data) => texts(data))
+		.catch((error) => console.log(error))
+
+	function texts(data) {
+		eles.paragraph.innerHTML = `${data.searchWord.firstPar}`
+	}
+
 	game.r = 9
 	game.c = 15
 	game.rxc = 135
@@ -99,6 +186,8 @@ const startGame = () => {
 		eles.myList.append(wv.ele)
 	})
 	console.log(game)
+
+	checkWinner()
 }
 
 const addLetters = () => {
@@ -269,5 +358,7 @@ const checkWinner = () => {
 	if (game.placedWords.length - counter == 0 || game.placedWords.length == 0) {
 		// console.log("yupiii")
 		log("Wygrana!<br><br>Naciśnij przycisk by zagrać ponownie.")
+		eles.btn.style.display = "inline"
 	}
+	eles.btn.textContent = "jeszcze raz"
 }

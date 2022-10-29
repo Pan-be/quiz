@@ -1,0 +1,8 @@
+Dla Małopolski w okresie od lutego 2022 przedostało się około 250 tys. uchodźców. Gdy pojawiła się taka możliwość 45% z nich zdecydowało się wystąpić o numer PESEL, który stwarza możliwość podjęcia pracy, skorzystania z pomocy lekarskiej itp. Połowę z nich stanowiła młodzież oraz dzieci.
+
+Oblicz ile dzieci i młodzieży otrzymało numer PESEL w Małopolsce
+
+- ok. 127 tys. <->
+- ok. 12 tys.
+
+Brawo, przed Tobą ostatnie zadanie. Wiesz już ilu uchodźców przybyło do Małopolski w związku z wojną w Ukrainie, udało Ci się pomóc w tłumaczeniu dokumentów, odnalezieniu wsparcia, złożeniu komputera dla Hakersa. Znajdź ukryte w diagramie talenty jakie rozwinąłeś podczas pracy jako wolontariusz.

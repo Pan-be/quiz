@@ -5,8 +5,10 @@
     <meta charset="utf-8">
     <title>Quiz</title>
     <!-- <link rel="stylesheet" type="text/css" href="vendor.css"> -->
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/modal.css">
+    <link rel="stylesheet" href="style/question.css">
+    <script type="module" src="script.js"></script>
     <!-- <script src="ex.js"></script> -->
 </head>
 
@@ -18,11 +20,21 @@
                 <a href="rabbit320.webm">link to the video</a> instead.
             </p>
         </video>
+
         <header></header>
+
+        <div class="modal" id="question">
+            <div class="modal-cont">
+            </div>
+        </div>
+
         <div class="game-board"></div>
+
         <footer><img src="pics/_stopka.png" alt=""></footer>
+
     </div>
-    <script src="video.js"></script>
+    <script src="includes/video.js"></script>
+    <script src="includes/modal.js"></script>
 </body>
 
 </html>
